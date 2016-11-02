@@ -18,13 +18,13 @@ t = output';
 trainFcn = 'trainbr';  % Scaled conjugate gradient backpropagation.
 
 % Create a Pattern Recognition Network
-hiddenLayerSize = [20 20];
+hiddenLayerSize = [13 13];
 net = patternnet(hiddenLayerSize);
 
 % Choose Input and Output Pre/Post-Processing Functions
 % For a list of all processing functions type: help nnprocess
-net.input.processFcns = {'processpca', 'mapminmax'};
-net.output.processFcns = {'processpca', 'mapminmax'};
+net.input.processFcns = {};
+net.output.processFcns = {};
 
 % Setup Division of Data for Training, Validation, Testing
 % For a list of all data division functions type: help nndivide
@@ -34,8 +34,8 @@ net.divideParam.trainRatio = 70/100;
 net.divideParam.valRatio = 15/100;
 net.divideParam.testRatio = 15/100;
 
-net.trainParam.max_fail = 100;
-net.trainParam.epochs = 1000;
+net.trainParam.max_fail = 60;
+net.trainParam.epochs = 500;
 
 % Choose a Performance Function
 % For a list of all performance functions type: help nnperformance
@@ -66,7 +66,7 @@ valPerformance = perform(net,valTargets,y)
 testPerformance = perform(net,testTargets,y)
 
 % View the Network
-view(net)
+% view(net)
 
 % Plots
 % Uncomment these lines to enable various plots.
