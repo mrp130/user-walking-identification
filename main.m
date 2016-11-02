@@ -21,7 +21,7 @@ for i = 1:22
 %     
 
     second = 0;
-    slice_second = 15;
+    slice_second = 2;
     max_sec = raw_data(end,1);
     while second < max_sec
         disp(sprintf('computing data:%d/%d second:%d/%d', i, 22, second, floor(max_sec)));
@@ -72,18 +72,16 @@ for i = 1:22
     end
 end
 
-class = 21;
+class = 1;
 input = data(:,1:end-1);
 output = data(:,end);
-output(output ~= class) = 2;
-output(output == class) = 1;
-output_ = zeros(length(output), 2);
-for i = 1:length(output)
-   output_(i, output(i)) = 1;
-end
-output = output_;
 
-class_idx = find(output(:,1) == 1);
+output(output ~= class,1) = 0;
+output(output == class,1) = 1;
+
+output = output(:,1);
+
+class_idx = find(output == 1);
 copy_n = floor(length(data) / length(class_idx));
 input = [input; resample(input(class_idx,:), copy_n, 1) ];
 output = [output; repmat(output(class_idx,:), copy_n, 1) ];
